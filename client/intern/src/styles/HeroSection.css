@@ -1,0 +1,137 @@
+/* HeroSection.css */
+
+.hero-section {
+    width: 100%;
+    background-color: #eef2f7;
+    padding: 80px 0;
+    text-align: center;
+  }
+  
+  .hero-section h1 {
+    font-size: 48px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .hero-section p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 40px;
+  }
+  
+  .job-search-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  
+  .job-search-form input {
+    padding: 12px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 250px;
+    max-width: 100%;
+  }
+  
+  .search-btn {
+    padding: 12px 30px;
+    background-color: #6200ea;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .search-btn:hover {
+    background-color: #4500b5;
+  }
+  
+  /* Responsive Styling */
+  @media (max-width: 1200px) {
+    .hero-section h1 {
+      font-size: 42px;
+    }
+  
+    .hero-section p {
+      font-size: 17px;
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .hero-section {
+      padding: 60px 0;
+    }
+  
+    .hero-section h1 {
+      font-size: 36px;
+    }
+  
+    .hero-section p {
+      font-size: 16px;
+    }
+  
+    .job-search-form {
+      gap: 10px;
+    }
+  
+    .job-search-form input {
+      width: 200px;
+    }
+  
+    .search-btn {
+      padding: 10px 25px;
+      font-size: 15px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 50px 0;
+    }
+  
+    .hero-section h1 {
+      font-size: 32px;
+    }
+  
+    .hero-section p {
+      font-size: 16px;
+    }
+  
+    .job-search-form {
+      flex-direction: column;
+    }
+  
+    .job-search-form input,
+    .search-btn {
+      width: 100%;
+    }
+  
+    .job-search-form input {
+      margin-bottom: 10px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .hero-section {
+      padding: 40px 0;
+    }
+  
+    .hero-section h1 {
+      font-size: 28px;
+    }
+  
+    .hero-section p {
+      font-size: 14px;
+    }
+  
+    .job-search-form input,
+    .search-btn {
+      padding: 10px 15px;
+      font-size: 14px;
+    }
+  }
+  

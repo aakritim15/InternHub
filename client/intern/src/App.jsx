@@ -1,20 +1,20 @@
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import routes from './routes/routes'; 
-
+import React from 'react';
+import './App.css';
+import Header from './pages/Header';
+import HeroSection from './pages/HeroSection';
+import FeaturedJobs from './pages/FeaturedJobs';
+import Footer from './pages/Footer';
+// import Signup from './pages/Signup';
 function App() {
-    return (
-        <Router>
-            <Routes>
-                {routes.map((route, index) => (
-                    <Route
-                        key={index}
-                        path={`${route.layout}${route.path}`}  // Combine layout and path
-                        element={route.component}
-                    />
-                ))}
-            </Routes>
-        </Router>
-    );
+  return (
+    <div className="App">
+      <Header />
+      <HeroSection />
+      <FeaturedJobs />
+      <Footer />
+      
+    </div>
+  );
 }
 
-export default App; 
+export default App;
