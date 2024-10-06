@@ -1,39 +1,19 @@
 /* Header.css */
-
 .header {
-    width: 100%;
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 0;
-  }
-  
-  .logo img {
-    height: 50px;
+    padding: 20px;
+    background-color: #f8f9fa; /* Light background */
   }
   
   nav ul {
     display: flex;
-    list-style: none;
+    list-style-type: none;
   }
   
   nav ul li {
     margin: 0 15px;
-  }
-  
-  nav ul li a {
-    font-size: 16px;
-    color: #333;
-    transition: color 0.3s ease;
-  }
-  
-  nav ul li a:hover {
-    color: #6200ea;
   }
   
   .auth-buttons {
@@ -43,22 +23,23 @@
   
   .auth-buttons button {
     margin-left: 10px;
-    padding: 8px 20px;
+    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
-    background-color: #6200ea;
-    color: #ffffff;
-    font-size: 14px;
+    border-radius: 5px; /* Rounded buttons */
+    background-color: #6200ea; /* Purple button background */
+    color: white; /* White text */
+    font-size: 16px;
+    cursor: pointer;
     transition: background-color 0.3s ease;
   }
   
   .auth-buttons button:hover {
-    background-color: #4500b5;
+    background-color: #4500b5; /* Darker purple on hover */
   }
   
   /* Responsive Styling */
   @media (max-width: 1024px) {
-    .header .container {
+    .header {
       padding: 15px 0;
     }
   
@@ -68,12 +49,12 @@
   
     .auth-buttons button {
       padding: 8px 15px;
-      font-size: 13px;
+      font-size: 14px;
     }
   }
   
   @media (max-width: 768px) {
-    .header .container {
+    .header {
       flex-direction: column;
       text-align: center;
     }
@@ -89,6 +70,21 @@
   
     .auth-buttons {
       margin-top: 15px;
+      justify-content: center; /* Center buttons */
+    }
+  
+    .auth-buttons button {
+      margin-left: 10px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .auth-buttons {
+      flex-direction: column; /* Stack buttons on small screens */
+    }
+  
+    .auth-buttons button {
+      margin: 10px 0; /* Add space between stacked buttons */
     }
   }
   
