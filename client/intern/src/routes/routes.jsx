@@ -1,14 +1,13 @@
-import LandingPage from "../pages/LandingPage"
-import Login from "../pages/Login"
-import Signup from '../pages/Signup'
-import PostJobForm from './pages/PostJobForm';
+import Login from "../pages/Login";
+import PostJobForm from '../pages/PostJobForm';
+import Signup from '../pages/Signup';
     const routes = [
-        {
-            name: "Dashboard",
-            layout: '/',
-            path: '/',
-            component: <LandingPage/>
-        },
+        // {
+        //     name: "Dashboard",
+        //     layout: '/',
+        //     path: '/',
+        //     component: <LandingPage/>
+        // },
         {
             name: "Login",
             layout: '/',
