@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Header from '../components/Header';
 import '../styles/JobForm.css';
-const JobPage = () => {
+const PostJobForm = () => {
   const [jobDetails, setJobDetails] = useState({
     jobTitle: '',
     jobType: '',
@@ -146,4 +146,4 @@ const JobPage = () => {
   );
 };
 
-export default JobPage;
+export default PostJobForm;

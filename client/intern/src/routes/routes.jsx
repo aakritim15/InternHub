@@ -1,13 +1,14 @@
+import JobPage from "../pages/JobPage";
 import Login from "../pages/Login";
 import PostJobForm from '../pages/PostJobForm';
 import Signup from '../pages/Signup';
     const routes = [
-        // {
-        //     name: "Dashboard",
-        //     layout: '/',
-        //     path: '/',
-        //     component: <LandingPage/>
-        // },
+        {
+            name: "Dashboard",
+            layout: '/',
+            path: '/',
+            component: <JobPage/>
+        },
         {
             name: "Login",
             layout: '/',
