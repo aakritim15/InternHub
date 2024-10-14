@@ -1,18 +1,35 @@
-const connectDB = require('./config/db')
-const express = require('express')
-const cors = require('cors')
-const app = express()
-app.use(cors())
+const connectDB = require('./config/db');
+const express = require('express');
+const multer = require('multer');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const Grid = require('gridfs-stream');
+const { GridFsStorage } = require('multer-gridfs-storage');
+const config = require('config');
+
+// Initialize app
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+// Connect to DB
 connectDB();
 
-app.use(express.json({extended: false}))
 
-app.get('/', (req,res)=> res.send("API RUNNING"))
 
-app.use('/api/' , require('./routes/api/users'))
-app.use('/api/auth',require('./routes/api/auth'))
-app.use('/api/profile/intern',require('./routes/intern'))
-app.use('/api/profile/recruiter',require('./routes/recruiter'))
-app.use('/api/recruiter', require('./routes/recruiter'))
-const PORT = process.env.PORT || 1000
-app.listen(PORT, ()=> console.log(`server started on port ${PORT}`))
+// Test route
+app.get('/', (req, res) => res.send("API RUNNING"));
+
+
+// Routes
+app.use('/api/', require('./routes/api/users'));
+app.use('/api/auth', require('./routes/api/auth'));
+app.use('/api/profile/intern', require('./routes/intern'));
+app.use('/api/profile/recruiter', require('./routes/recruiter'));
+app.use('/api/recruiter', require('./routes/recruiter'));
+app.use('/api/apply/upload', require('./routes/apply'))
+
+// Start server
+const PORT = process.env.PORT || 1000;
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

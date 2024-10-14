@@ -134,6 +134,16 @@ router.post('/post', [
         res.status(500).send("Server error");
     }
 });
+// Fetch all job profiles
+router.get('/post', async (req, res) => {
+    try {
+        const jobs = await JobProfile.find();
+        res.json(jobs);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Server error' });
+    }
+});
 
     
 

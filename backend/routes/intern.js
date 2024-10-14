@@ -1,10 +1,15 @@
-const express = require('express')
+const express = require('express');
 const auth = require('../middleware/auth');
 const InternProfile = require('../model/profile/Intern');
-const { profile, error } = require('console');
+const { check, validationResult } = require('express-validator');
+const multer = require('multer');
+const mongoose = require('mongoose');
+const Grid = require('gridfs-stream');
+const { GridFsStorage } = require('multer-gridfs-storage');
+const config = require('config');
 const router = express.Router();
-const {check, validationResult} = require('express-validator');
-const { send } = require('process');
+
+
 //make profile intern
 router.post ('/', [auth,
     [
@@ -223,6 +228,58 @@ router.put('/education', [auth,
         }
     })
     
-    
+// Mongo URI
+const mongoURI = config.get('mongoURI');
+
+// Initialize GridFS
+let gfs;
+const conn = mongoose.connection;
+conn.once('open', () => {
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection('uploads');
+});
+
+// GridFS Storage engine for file uploads
+const storage = new GridFsStorage({
+  url: mongoURI,
+  file: (req, file) => {
+    return {
+      filename: `${Date.now()}-${file.originalname}`,
+      bucketName: 'uploads' // Files will be stored in the 'uploads' collection
+    };
+  }
+});
+
+// Set up multer for file upload
+const upload = multer({ storage });
+
+// PUT route to upload resume and update the intern profile
+router.put('/upload-resume', [auth, upload.single('resume')], async (req, res) => {
+  try {
+    // Find the profile for the logged-in user
+    let profile = await InternProfile.findOne({ user: req.user.id });
+
+    if (!profile) {
+      return res.status(404).json({ msg: 'Profile not found' });
+    }
+
+    // Add resume file metadata to the profile
+    profile.resume = {
+      filename: req.file.filename,
+      fileId: req.file.id,
+      contentType: req.file.contentType,
+      uploadDate: req.file.uploadDate
+    };
+
+    // Save the profile with the updated resume
+    await profile.save();
+
+    res.json({ msg: 'Resume uploaded successfully', profile });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
+});
+
 
 module.exports = router;

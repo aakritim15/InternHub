@@ -7,7 +7,12 @@ const ProfileSchema =  new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
     },
-    
+    resume: {
+        filename: { type: String }, 
+        fileId: { type: mongoose.Schema.Types.ObjectId },
+        contentType: { type: String }, 
+        uploadDate: { type: Date, default: Date.now } 
+    },
     website:{
         type: String
     },
