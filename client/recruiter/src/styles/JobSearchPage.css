@@ -1,0 +1,33 @@
+.job-search-container {
+    padding: 2rem;
+  }
+  
+  .search-bar input {
+    margin: 0.5rem;
+    padding: 0.5rem;
+  }
+  
+  .search-bar button {
+    padding: 0.5rem 1rem;
+    background-color: #6a1b9a;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .content {
+    display: flex;
+    margin-top: 2rem;
+  }
+  
+  .job-listings {
+    flex: 3;
+    display: grid;
+    gap: 1rem;
+  }
+  
+  .filter-container {
+    flex: 1;
+    margin-right: 2rem;
+  }
+  
