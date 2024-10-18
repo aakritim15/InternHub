@@ -2,8 +2,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MuiCard from '@mui/material/Card';
 import Checkbox from '@mui/material/Checkbox';
-import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
@@ -12,10 +10,10 @@ import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import Axios from 'axios'; // Import Axios
 import * as React from 'react';
-
-import ColorModeSelect from '../components/ColorModeSelecct';
-
+import { useNavigate } from 'react-router-dom';
+import ColorModeSelect from '../components/ColorModeSelecct'; // Corrected import
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -37,7 +35,10 @@ const Card = styled(MuiCard)(({ theme }) => ({
 }));
 
 const SignInContainer = styled(Stack)(({ theme }) => ({
-  minHeight: '100%',
+  minHeight: '100vh',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
   padding: theme.spacing(2),
   [theme.breakpoints.up('sm')]: {
     padding: theme.spacing(4),
@@ -59,11 +60,13 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignIn(props) {
+  const navigate = useNavigate();
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [open, setOpen] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false); // To track submission state
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -73,16 +76,26 @@ export default function SignIn(props) {
     setOpen(false);
   };
 
-  const handleSubmit = (event) => {
-    if (emailError || passwordError) {
-      event.preventDefault();
-      return;
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent default form submission
+    if (!validateInputs()) {
+      return; // Stop if validation fails
     }
+
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const email = data.get('email');
+    const password = data.get('password');
+
+    try {
+      setIsSubmitting(true); // Set submitting state
+      const response = await Axios.post('http://localhost:1000/api/auth', { email, password });
+      console.log(response.data); // Handle successful authentication (e.g., store token, redirect)
+      navigate("/");
+    } catch (error) {
+      console.error(error.response.data); // Handle errors (e.g., show error message)
+    } finally {
+      setIsSubmitting(false); // Reset submitting state
+    }
   };
 
   const validateInputs = () => {
@@ -114,11 +127,9 @@ export default function SignIn(props) {
 
   return (
     <div>
-      <CssBaseline enableColorScheme />
       <SignInContainer direction="column" justifyContent="space-between">
         <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
         <Card variant="outlined">
-          {/* <SitemarkIcon /> */}
           <Typography
             component="h1"
             variant="h4"
@@ -158,7 +169,6 @@ export default function SignIn(props) {
             <FormControl>
               <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <FormLabel htmlFor="password">Password</FormLabel>
-               
               </Box>
               <TextField
                 error={passwordError}
@@ -168,7 +178,6 @@ export default function SignIn(props) {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                autoFocus
                 required
                 fullWidth
                 variant="outlined"
@@ -179,14 +188,13 @@ export default function SignIn(props) {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-            
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              onClick={validateInputs}
+              disabled={isSubmitting} // Disable button while submitting
             >
-              Sign in
+              {isSubmitting ? 'Signing in...' : 'Sign in'}
             </Button>
             <Typography sx={{ textAlign: 'center' }}>
               Don&apos;t have an account?{' '}
@@ -201,10 +209,8 @@ export default function SignIn(props) {
               </span>
             </Typography>
           </Box>
-          <Divider>or</Divider>
-         
         </Card>
       </SignInContainer>
-      </div>
+    </div>
   );
 }

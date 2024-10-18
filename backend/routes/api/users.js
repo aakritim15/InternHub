@@ -64,7 +64,7 @@ router.post('/intern',[
     
 });
 
-// POST api/intern... REGISTER USER
+// POST api/recruiter... REGISTER USER
 router.post('/recruiter',[
     check('name', "Name is required").not().isEmpty(),
     check('email',"Please include a valid email").isEmail(),

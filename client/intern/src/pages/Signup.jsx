@@ -1,161 +1,251 @@
-import React, { useState } from 'react';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import MuiCard from '@mui/material/Card';
+import Checkbox from '@mui/material/Checkbox';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormLabel from '@mui/material/FormLabel';
+import Link from '@mui/material/Link';
+import Stack from '@mui/material/Stack';
+import { styled } from '@mui/material/styles';
+import Switch from '@mui/material/Switch'; // Import Switch component
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import axios from 'axios'; // Import Axios
+import * as React from 'react';
+import ColorModeSelect from '../components/ColorModeSelecct';
 
-const Signup = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    password2: ''
-  });
+const Card = styled(MuiCard)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignSelf: 'center',
+  width: '100%',
+  padding: theme.spacing(4),
+  gap: theme.spacing(2),
+  margin: 'auto',
+  [theme.breakpoints.up('sm')]: {
+    maxWidth: '450px',
+  },
+  boxShadow:
+    'hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px',
+  ...theme.applyStyles('dark', {
+    boxShadow:
+      'hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px',
+  }),
+}));
 
-  const { name, email, password, password2 } = formData;
+const RegisterContainer = styled(Stack)(({ theme }) => ({
+  minHeight: '100vh',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: theme.spacing(2),
+  [theme.breakpoints.up('sm')]: {
+    padding: theme.spacing(4),
+  },
+  '&::before': {
+    content: '""',
+    display: 'block',
+    position: 'absolute',
+    zIndex: -1,
+    inset: 0,
+    backgroundImage:
+      'radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))',
+    backgroundRepeat: 'no-repeat',
+    ...theme.applyStyles('dark', {
+      backgroundImage:
+        'radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))',
+    }),
+  },
+}));
 
-  const onChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+export default function Register(props) {
+  const [emailError, setEmailError] = React.useState(false);
+  const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
+  const [passwordError, setPasswordError] = React.useState(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
+  const [passwordConfirmError, setPasswordConfirmError] = React.useState(false);
+  const [passwordConfirmErrorMessage, setPasswordConfirmErrorMessage] = React.useState('');
+  const [isRecruiter, setIsRecruiter] = React.useState(false); // State for user role
+
+  const handleRoleToggle = () => {
+    setIsRecruiter((prev) => !prev);
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (emailError || passwordError || passwordConfirmError) return;
 
-    if (password !== password2) {
-      console.error('Passwords do not match');
+    const data = new FormData(event.currentTarget);
+    const userData = {
+      name: data.get('fullName'),
+      email: data.get('email'),
+      password: data.get('password'),
+      role: isRecruiter ? 'recruiter' : 'intern', // Capture role
+    };
+
+    try {
+      const response = await axios.post(`http://localhost:1000/api/${userData.role}`, userData);
+      console.log('Registration successful:', response.data);
+      // Handle success (e.g., redirect, show success message, etc.)
+    } catch (error) {
+      console.error('Registration error:', error.response.data);
+      // Handle error (e.g., show error message)
+      console.log(error)
+    }
+  };
+
+  const validateInputs = () => {
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const passwordConfirm = document.getElementById('passwordConfirm');
+
+    let isValid = true;
+
+    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
+      setEmailError(true);
+      setEmailErrorMessage('Please enter a valid email address.');
+      isValid = false;
     } else {
-      console.log('Form submitted:', formData);
+      setEmailError(false);
+      setEmailErrorMessage('');
     }
-  };
 
-  // Inline styles
-  const styles = {
-    container: {
-      maxWidth: '600px',
-      margin: '0 auto',
-      padding: '2rem',
-      backgroundColor: '#f4f4f4',
-      borderRadius: '10px',
-      boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
-    },
-    large: {
-      fontSize: '2.5rem',
-      fontWeight: '700',
-      textAlign: 'center',
-      marginBottom: '1rem',
-    },
-    textPrimary: {
-      color: '#007bff',
-    },
-    lead: {
-      fontSize: '1.2rem',
-      textAlign: 'center',
-      marginBottom: '1rem',
-      color: '#6c757d',
-    },
-    formGroup: {
-      marginBottom: '1.5rem',
-    },
-    input: {
-      width: '100%',
-      padding: '0.8rem',
-      fontSize: '1rem',
-      border: '1px solid #ced4da',
-      borderRadius: '5px',
-      backgroundColor: '#fff',
-      transition: 'all 0.3s ease',
-      marginBottom: '0.5rem',
-    },
-    inputFocus: {
-      borderColor: '#007bff',
-      outline: 'none',
-      boxShadow: '0 0 5px rgba(0, 123, 255, 0.3)',
-    },
-    submitButton: {
-      width: '100%',
-      padding: '0.8rem',
-      fontSize: '1.2rem',
-      backgroundColor: '#007bff',
-      color: 'white',
-      border: 'none',
-      borderRadius: '5px',
-      cursor: 'pointer',
-      transition: 'background-color 0.3s ease',
-    },
-    submitButtonHover: {
-      backgroundColor: '#0056b3',
-    },
-    formText: {
-      fontSize: '0.9rem',
-      color: '#6c757d',
+    if (!password.value || password.value.length < 6) {
+      setPasswordError(true);
+      setPasswordErrorMessage('Password must be at least 6 characters long.');
+      isValid = false;
+    } else {
+      setPasswordError(false);
+      setPasswordErrorMessage('');
     }
+
+    if (password.value !== passwordConfirm.value) {
+      setPasswordConfirmError(true);
+      setPasswordConfirmErrorMessage('Passwords do not match.');
+      isValid = false;
+    } else {
+      setPasswordConfirmError(false);
+      setPasswordConfirmErrorMessage('');
+    }
+
+    return isValid;
   };
 
   return (
-    <div style={styles.container}>
-      <h1 style={{ ...styles.large, ...styles.textPrimary }}>Sign Up</h1>
-      <p style={styles.lead}>
-        <i className="fas fa-user"></i> Create Your Account
-      </p>
-      <form className="form" onSubmit={onSubmit}>
-        <div style={styles.formGroup}>
-          <input
-            type="text"
-            placeholder="Name"
-            name="name"
-            required
-            value={name}
-            onChange={onChange}
-            style={styles.input}
-          />
-        </div>
-        <div style={styles.formGroup}>
-          <input
-            type="email"
-            placeholder="Email Address"
-            name="email"
-            required
-            value={email}
-            onChange={onChange}
-            style={styles.input}
-          />
-          <small style={styles.formText}>
-            This site uses Gravatar so if you want a profile image, use a Gravatar email
-          </small>
-        </div>
-        <div style={styles.formGroup}>
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            minLength="6"
-            required
-            value={password}
-            onChange={onChange}
-            style={styles.input}
-          />
-        </div>
-        <div style={styles.formGroup}>
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            name="password2"
-            minLength="6"
-            required
-            value={password2}
-            onChange={onChange}
-            style={styles.input}
-          />
-        </div>
-        <input
-          type="submit"
-          value="Register"
-          style={styles.submitButton}
-          onMouseOver={(e) => (e.target.style.backgroundColor = '#0056b3')}
-          onMouseOut={(e) => (e.target.style.backgroundColor = '#007bff')}
-        />
-      </form>
+    <div>
+      <RegisterContainer direction="column" justifyContent="space-between">
+        <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
+        <Card variant="outlined">
+          <Typography
+            component="h1"
+            variant="h4"
+            sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
+          >
+            Register
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: '100%',
+              gap: 2,
+            }}
+          >
+            <FormControl>
+              <FormLabel htmlFor="fullName">Full Name</FormLabel>
+              <TextField
+                id="fullName"
+                type="text"
+                name="fullName"
+                placeholder="John Doe"
+                autoComplete="name"
+                autoFocus
+                required
+                fullWidth
+                variant="outlined"
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="email">Email</FormLabel>
+              <TextField
+                error={emailError}
+                helperText={emailErrorMessage}
+                id="email"
+                type="email"
+                name="email"
+                placeholder="your@email.com"
+                autoComplete="email"
+                required
+                fullWidth
+                variant="outlined"
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="password">Password</FormLabel>
+              <TextField
+                error={passwordError}
+                helperText={passwordErrorMessage}
+                name="password"
+                placeholder="••••••"
+                type="password"
+                id="password"
+                autoComplete="new-password"
+                required
+                fullWidth
+                variant="outlined"
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="passwordConfirm">Confirm Password</FormLabel>
+              <TextField
+                error={passwordConfirmError}
+                helperText={passwordConfirmErrorMessage}
+                name="passwordConfirm"
+                placeholder="••••••"
+                type="password"
+                id="passwordConfirm"
+                autoComplete="new-password"
+                required
+                fullWidth
+                variant="outlined"
+              />
+            </FormControl>
+            <FormControlLabel
+              control={<Switch checked={isRecruiter} onChange={handleRoleToggle} />}
+              label={isRecruiter ? 'Recruiter' : 'Intern'}
+              sx={{ justifyContent: 'space-between', marginTop: '1rem' }}
+            />
+            <FormControlLabel
+              control={<Checkbox value="terms" color="primary" />}
+              label="I agree to the terms and conditions"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              onClick={validateInputs}
+            >
+              Register
+            </Button>
+            <Typography sx={{ textAlign: 'center' }}>
+              Already have an account?{' '}
+              <span>
+                <Link
+                  href="/login"
+                  variant="body2"
+                  sx={{ alignSelf: 'center' }}
+                >
+                  Sign in
+                </Link>
+              </span>
+            </Typography>
+          </Box>
+        </Card>
+      </RegisterContainer>
     </div>
   );
-};
-
-export default Signup;
+}
