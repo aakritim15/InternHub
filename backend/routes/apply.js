@@ -40,21 +40,21 @@ router.post('/:jobId', [auth], upload.single('resume'), async (req, res) => {
         }
 
         // Check if the resume is provided
-        // if (!req.file) {
-        //     return res.status(400).json({ msg: 'Resume file is required' });
-        // }
+        if (!req.file) {
+            return res.status(400).json({ msg: 'Resume file is required' });
+        }
 
         // Create a file in GridFS
-        // const resumeFileId = await new Promise((resolve, reject) => {
-        //     const writestream = gfs.createWriteStream({
-        //         filename: req.file.originalname,
-        //         content_type: req.file.mimetype,
-        //         metadata: { userId: req.user.id }
-        //     });
-        //     writestream.on('close', (file) => resolve(file._id));
-        //     writestream.on('error', reject);
-        //     writestream.end(req.file.buffer);
-        // });
+        const resumeFileId = await new Promise((resolve, reject) => {
+            const writestream = gfs.createWriteStream({
+                filename: req.file.originalname,
+                content_type: req.file.mimetype,
+                metadata: { userId: req.user.id }
+            });
+            writestream.on('close', (file) => resolve(file._id));
+            writestream.on('error', reject);
+            writestream.end(req.file.buffer);
+        });
 
         // Create a new application
         const newApplication = {
