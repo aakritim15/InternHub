@@ -4,12 +4,6 @@ import PostJobForm from '../pages/PostJobForm';
 import Signup from '../pages/Signup';
     const routes = [
         {
-            name: "Dashboard",
-            layout: '/',
-            path: '/',
-            component: <JobPage/>
-        },
-        {
             name: "Login",
             layout: '/',
             path: '/login',
@@ -22,10 +16,18 @@ import Signup from '../pages/Signup';
             component: <Signup/>
         },
         {
+            name: "Dashboard",
+            layout: '/',
+            path: '/',
+            component: <JobPage/>,
+            protected: true
+        },
+        {
             name: "PostJobForm",
             layout: '/',
             path: '/postjobform',
-            component: <PostJobForm/>
+            component: <PostJobForm/>,
+            protected: true
         }
     ]
 

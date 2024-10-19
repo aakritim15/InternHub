@@ -1,3 +1,4 @@
+import { styled } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MuiCard from '@mui/material/Card';
@@ -7,13 +8,14 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
-import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Axios from 'axios'; // Import Axios
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
-import ColorModeSelect from '../components/ColorModeSelecct'; // Corrected import
+import ColorModeSelect from '../components/ColorModeSelecct';
+import { useAuth } from '../context/AuthContext';
+
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -60,13 +62,15 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignIn(props) {
+  const { isAuthenticated, login } = useAuth(); // Correct, using what's provided in AuthContext
+
   const navigate = useNavigate();
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [open, setOpen] = React.useState(false);
-  const [isSubmitting, setIsSubmitting] = React.useState(false); // To track submission state
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -77,9 +81,9 @@ export default function SignIn(props) {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
     if (!validateInputs()) {
-      return; // Stop if validation fails
+      return;
     }
 
     const data = new FormData(event.currentTarget);
@@ -87,14 +91,15 @@ export default function SignIn(props) {
     const password = data.get('password');
 
     try {
-      setIsSubmitting(true); // Set submitting state
+      setIsSubmitting(true);
       const response = await Axios.post('http://localhost:1000/api/auth', { email, password });
-      console.log(response.data); // Handle successful authentication (e.g., store token, redirect)
-      navigate("/");
+      console.log(response.data);
+      login(response.data); // Update user in context
+      navigate('/');
     } catch (error) {
-      console.error(error.response.data); // Handle errors (e.g., show error message)
+      console.error(error.response.data);
     } finally {
-      setIsSubmitting(false); // Reset submitting state
+      setIsSubmitting(false);
     }
   };
 
@@ -192,7 +197,7 @@ export default function SignIn(props) {
               type="submit"
               fullWidth
               variant="contained"
-              disabled={isSubmitting} // Disable button while submitting
+              disabled={isSubmitting}
             >
               {isSubmitting ? 'Signing in...' : 'Sign in'}
             </Button>

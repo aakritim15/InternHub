@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography';
 import axios from 'axios'; // Import Axios
 import * as React from 'react';
 import ColorModeSelect from '../components/ColorModeSelecct';
-
+import { useAuth } from '../context/AuthContext';
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
@@ -60,6 +60,7 @@ const RegisterContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function Register(props) {
+  const { isAuthenticated, login } = useAuth(); 
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
@@ -67,6 +68,11 @@ export default function Register(props) {
   const [passwordConfirmError, setPasswordConfirmError] = React.useState(false);
   const [passwordConfirmErrorMessage, setPasswordConfirmErrorMessage] = React.useState('');
   const [isRecruiter, setIsRecruiter] = React.useState(false); // State for user role
+
+
+  
+
+
 
   const handleRoleToggle = () => {
     setIsRecruiter((prev) => !prev);
@@ -81,12 +87,13 @@ export default function Register(props) {
       name: data.get('fullName'),
       email: data.get('email'),
       password: data.get('password'),
-      role: isRecruiter ? 'recruiter' : 'intern', // Capture role
+      role: isRecruiter ? 'recruiter' : 'intern', 
     };
 
     try {
       const response = await axios.post(`http://localhost:1000/api/${userData.role}`, userData);
       console.log('Registration successful:', response.data);
+      login(response.data)
       // Handle success (e.g., redirect, show success message, etc.)
     } catch (error) {
       console.error('Registration error:', error.response.data);
