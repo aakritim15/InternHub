@@ -1,6 +1,7 @@
 import JobPage from "../pages/JobPage";
 import Login from "../pages/Login";
 import PostJobForm from '../pages/PostJobForm';
+import Profile from '../pages/ProfileForm';
 import Signup from '../pages/Signup';
     const routes = [
         {
@@ -27,6 +28,13 @@ import Signup from '../pages/Signup';
             layout: '/',
             path: '/postjobform',
             component: <PostJobForm/>,
+            protected: true
+        },
+        {
+            name: "CreateProfile",
+            layout: '/',
+            path: '/createprofile',
+            component: <Profile/>,
             protected: true
         }
     ]

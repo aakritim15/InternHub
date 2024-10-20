@@ -41,7 +41,7 @@ router.post ('/createProfile', [auth,
             
             if(website)  profileFields.website = website;
             if(location) profileFields.location = location;
-            if(description) profileFields.bio = bio;
+            if(description) profileFields.description = description;
            
             if(githubusername) profileFields.githubusername = githubusername
             if (typeof skills === 'string') {
