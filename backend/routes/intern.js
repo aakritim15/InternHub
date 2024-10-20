@@ -11,7 +11,7 @@ const router = express.Router();
 
 
 //make profile intern
-router.post ('/', [auth,
+router.post ('/createProfile', [auth,
     [
         check('skills', 'Skills is required').not().isEmpty(),
         
@@ -84,7 +84,7 @@ router.post ('/', [auth,
 
 })
 //get all profiles
-router.get('/', async (req,res)=>{
+router.get('/getProfile', async (req,res)=>{
     try {
         const profiles = await InternProfile.find().populate('user')
         res.json(profiles)
@@ -97,7 +97,7 @@ router.get('/', async (req,res)=>{
 })
 
 //update experience
-router.put("/experience", [auth,[
+router.put("/createProfile/experience", [auth,[
     check('title', 'Title is required').not().isEmpty(),
     check('company', 'Company is required').not().isEmpty(),
     check('from', 'From date is required and needs to be from the past')
@@ -144,7 +144,7 @@ router.put("/experience", [auth,[
 })
 
 //delete experiences
-router.delete('/experience/:exp_id', auth ,async (req,res)=>{
+router.delete('createProfile/experience/:exp_id', auth ,async (req,res)=>{
     try {
         const profile =  await InternProfile.findOne({user: req.user.id});
         //remove index
@@ -163,7 +163,7 @@ router.delete('/experience/:exp_id', auth ,async (req,res)=>{
 
 //add education
 
-router.put('/education', [auth,
+router.put('createProfile/education', [auth,
     [
         check('school','School is required').not().isEmpty(),
         check('degree','Degree is required').not().isEmpty(),
@@ -214,7 +214,7 @@ router.put('/education', [auth,
     
     //delete educaion
     
-    router.delete('/education/:edu_id', auth, async(req,res)=>{
+    router.delete('createProfile/education/:edu_id', auth, async(req,res)=>{
         try {
             const profile  = await InternProfile.findOne({ user: req.user.id});
     
@@ -254,7 +254,7 @@ const storage = new GridFsStorage({
 const upload = multer({ storage });
 
 // PUT route to upload resume and update the intern profile
-router.put('/upload-resume', [auth, upload.single('resume')], async (req, res) => {
+router.put('createProfile/upload-resume', [auth, upload.single('resume')], async (req, res) => {
   try {
     // Find the profile for the logged-in user
     let profile = await InternProfile.findOne({ user: req.user.id });

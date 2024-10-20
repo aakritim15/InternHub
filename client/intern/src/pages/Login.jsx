@@ -90,11 +90,14 @@ export default function SignIn(props) {
     const email = data.get('email');
     const password = data.get('password');
 
+
     try {
       setIsSubmitting(true);
       const response = await Axios.post('http://localhost:1000/api/auth', { email, password });
-      console.log(response.data);
-      login(response.data); // Update user in context
+      const { token, userId } = response.data; // Destructure token and userId
+      console.log(userId)
+      login({ id: userId, token });  // Update user in context
+      console.log(userId)
       navigate('/');
     } catch (error) {
       console.error(error.response.data);

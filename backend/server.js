@@ -9,7 +9,7 @@ const config = require('config');
 
 // Initialize app
 const app = express();
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -25,10 +25,10 @@ app.get('/', (req, res) => res.send("API RUNNING"));
 // Routes
 app.use('/api/', require('./routes/api/users'));
 app.use('/api/auth', require('./routes/api/auth'));
-app.use('/api/profile/intern', require('./routes/intern'));
+app.use('/api/intern', require('./routes/intern'));
 app.use('/api/profile/recruiter', require('./routes/recruiter'));
 app.use('/api/recruiter', require('./routes/recruiter'));
-app.use('/api/apply/upload', require('./routes/apply'))
+app.use('/api/apply/', require('./routes/apply'))
 
 // Start server
 const PORT = process.env.PORT || 1000;
