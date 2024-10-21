@@ -23,6 +23,9 @@ const SocialLinksHeading = styled(Typography)(({ theme }) => ({
   marginTop: theme.spacing(2),
 }));
 
+// Function to get the profile
+
+
 const ProfileForm = () => {
   const [formData, setFormData] = useState({
     website: '',
@@ -36,10 +39,9 @@ const ProfileForm = () => {
     instagram: '',
     resume: null,
   });
-  const [resumeFileName, setResumeFileName] = useState('');
 
   const { website, location, description, skills, githubusername, youtube, twitter, linkedin, instagram } = formData;
-  const { currentUser } = useAuth();
+  const { isAuthenticated, userId, currentUser } = useAuth();
 
   // Function to fetch the profile
   const fetchProfile = async (token) => {
@@ -63,7 +65,6 @@ const ProfileForm = () => {
     const loadProfile = async () => {
       if (currentUser?.token) {
         const profileData = await fetchProfile(currentUser.token);
-        console.log(profileData.resume)
         if (profileData) {
           console.log("Profile data:", profileData); // Log the fetched data
           setFormData({
@@ -76,23 +77,21 @@ const ProfileForm = () => {
             twitter: profileData.twitter || '',
             linkedin: profileData.linkedin || '',
             instagram: profileData.instagram || '',
-            resume: profileData.resumeFileName || '',
+            resume: null,
           });
         }
       }
     };
 
     loadProfile(); // Call the loadProfile function
-  }, [currentUser]);
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0]; // Get the uploaded file
-    setFormData({ ...formData, resume: file });
-    setResumeFileName(file ? file.name : ''); // Set the file name to state
+    setFormData({ ...formData, resume: e.target.files[0] });
   };
 
   const handleSubmit = async (e) => {
@@ -111,8 +110,8 @@ const ProfileForm = () => {
         profileData,
         {
           headers: {
-            'Content-Type': 'application/json',
-            'x-auth-token': currentUser.token,
+            'Content-Type': 'multipart/form-data',
+            'x-auth-token': `${currentUser.token}`,
           },
         }
       );
@@ -244,11 +243,6 @@ const ProfileForm = () => {
                   Upload Resume
                 </StyledButton>
               </label>
-              {resumeFileName && ( // Display the uploaded resume file name
-                <Typography variant="body2" style={{ marginTop: '8px' }}>
-                  Uploaded Resume: {resumeFileName}
-                </Typography>
-              )}
             </Box>
           </Grid2>
           <Grid2 xs={12}>

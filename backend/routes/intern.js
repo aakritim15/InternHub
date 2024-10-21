@@ -28,10 +28,10 @@ router.post ('/createProfile', [auth,
         description,
         skills, 
         githubusername,
-        youtube,
-        twitter,        
-        instagram,
-        linkedin,
+        // youtube,
+        // twitter,        
+        // instagram,
+        // linkedin,
         } = req.body;
 
             //build profile object
@@ -52,11 +52,11 @@ router.post ('/createProfile', [auth,
             console.log(profileFields.skills)
         
             //social object
-            profileFields.social = {}
-            if(youtube) profileFields.social.youtube = youtube
-            if(twitter) profileFields.social.twitter= twitter
-            if(instagram) profileFields.social.instagram =  instagram
-            if(linkedin) profileFields.social.linkedin = linkedin
+            // profileFields.social = {}
+            // if(youtube) profileFields.social.youtube = youtube
+            // if(twitter) profileFields.social.twitter= twitter
+            // if(instagram) profileFields.social.instagram =  instagram
+            // if(linkedin) profileFields.social.linkedin = linkedin
             
             try {
                 let profile =  await InternProfile.findOne({user: req.user.id})
@@ -84,7 +84,7 @@ router.post ('/createProfile', [auth,
 
 })
 //get all profiles
-router.get('/getProfile', async (req,res)=>{
+router.get('/getProfiles', async (req,res)=>{
     try {
         const profiles = await InternProfile.find().populate('user')
         res.json(profiles)
@@ -96,6 +96,20 @@ router.get('/getProfile', async (req,res)=>{
     }
 })
 
+
+//get 1 person's profile
+router.get('/getProfile', [auth], async (req,res)=>{
+    try {
+        
+        const profiles = await InternProfile.findOne({ user: req.user.id}).populate('user')
+        res.json(profiles)
+    } catch (error) {
+
+        console.error(error)
+        res.status(500).send("Server error")
+        
+    }
+})
 //update experience
 router.put("/createProfile/experience", [auth,[
     check('title', 'Title is required').not().isEmpty(),

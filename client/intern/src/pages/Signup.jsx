@@ -13,6 +13,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import axios from 'axios'; // Import Axios
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import ColorModeSelect from '../components/ColorModeSelecct';
 import { useAuth } from '../context/AuthContext';
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -70,7 +71,7 @@ export default function Register(props) {
   const [isRecruiter, setIsRecruiter] = React.useState(false); // State for user role
 
 
-  
+  const navigate = useNavigate()
 
 
 
@@ -95,6 +96,7 @@ export default function Register(props) {
       console.log('Registration successful:', response.data);
       login(response.data)
       // Handle success (e.g., redirect, show success message, etc.)
+      if (userData.role == intern) navigate('/');
     } catch (error) {
       console.error('Registration error:', error.response.data);
       // Handle error (e.g., show error message)
