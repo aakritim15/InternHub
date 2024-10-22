@@ -96,7 +96,7 @@ export default function Register(props) {
       console.log('Registration successful:', response.data);
       login(response.data)
       // Handle success (e.g., redirect, show success message, etc.)
-      if (userData.role == intern) navigate('/');
+      navigate('/');
     } catch (error) {
       console.error('Registration error:', error.response.data);
       // Handle error (e.g., show error message)
