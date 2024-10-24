@@ -1,10 +1,12 @@
 /* Footer.css */
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 .footer {
     width: 100%;
     background-color: #6200ea;
     color: #ffffff;
-    padding: 40px 0;
+    padding: 2vh 0 4vh 0;
     text-align: center;
   }
   
@@ -14,7 +16,20 @@
     flex-wrap: wrap;
     gap: 30px;
   }
-  
+  .custFlex{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 30px;
+  }
+  .custFlex2{
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    font-size: 3vh;
+    justify-items: left;
+    text-align: left;
+  }
   .footer-section {
     flex: 1;
     min-width: 200px;
@@ -72,6 +87,202 @@
     font-size: 14px;
     color: #cccccc;
   }
+  .footerHolder {
+  font-size: 1vh;
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(24, 24, 24, 255));
+  position: relative;
+}
+.footerHolder {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.footerContacts {
+  padding-right: 0%;
+  display: flex;
+  flex-direction: row;
+  gap: 28px;
+  font-weight: normal;
+  font-size: 2.5vh;
+  justify-items: center;
+  align-items: center;
+}
+.footerContacts > span {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+.footerContacts > span > span > img {
+  top: 0px;
+  left: 0px;
+  width: 40px;
+  height: 40px;
+}
+.footerContacts > span > span {
+  height: 40px;
+  width: auto;
+}
+.footerGreen {
+  font-size: 3vh;
+  color: #ffffff;
+}
+.footerContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 0px solid #e1ecff;
+  border-bottom: 0px solid #e1ecff;
+  color: white;
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  padding-top: 40px;
+  padding-bottom: 0px;
+  padding-left: 5%;
+  font-size: 0.2vh;
+}
+.divLine {
+  width: 90%;
+  margin: auto;
+  margin-top: 3vh;
+  margin-bottom: 1vh;
+}
+.logoHolder {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+.downloadLogoHolder {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+.downloadLogoHolder > img {
+  width: 160px;
+}
+.copyrightContainer {
+  text-align: center;
+  color: #ffffff;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  padding: 10px;
+}
+.ThelogoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: left;
+}
+.ThelogoContainer > p {
+  font-size: 20px;
+  font-weight: normal;
+}
+.ThelogoContainer > ul {
+  list-style-type: none;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  padding: 0px;
+}
+.ThelogoContainer > ul > li > img {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+.scrollAnchor{
+  scroll-behavior: inherit;
+  text-decoration: none;
+}
+.debugSep{
+  height: 75vh;
+}
+@media screen and (max-width: 1023px) {
+  #navInnerFlex{
+    display: none;
+  }
+  #heroImg{
+    display: none;
+  }
+  .footerContacts {
+    display: none;
+  }
+  .footerHolder {
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    ;
+  }
+  .ThelogoContainer{
+    align-items: center;
+    align-content: center;
+  }
+  .footerContainer {
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+  }
+  .connectContainer {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+  .downloadtheApp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .masterFeature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10%;
+    margin-left: 5%;
+    margin-top: 15vh;
+    padding-bottom: 10vh;
+  }
+  .embCard {
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+    padding-top: 10vh;
+    flex-basis: 100px;
+    align-self: center;
+  }
+  #heroImg {
+    display: none;
+  }
+  .mainTitle {
+    align-items: center;
+    align-self: center;
+    margin: auto;
+    text-align: center;
+  }
+  #gradCol {
+    text-align: center;
+  }
+  .heroButton {
+    justify-self: center;
+    margin: auto;
+  }
+  .cardOt{
+    height: 25rem;
+  }
+  .trioFeatures{
+    flex-direction: column;
+    gap: 2vh;
+  }
+}
+@media screen and (max-width: 370px) {
+  .downloadLogoHolder {
+    flex-direction: column;
+  }
+  .logoHolder > img {
+    width: 40px;
+  }
+}
   
   /* Responsive Styling */
   @media (max-width: 1200px) {
