@@ -12,7 +12,7 @@ const JobPage = () => {
       <HeroSection />
       <FeaturedJobs />
       <Footer />
-      <Link to="/createProfile">Go to createProfile</Link>
+      
 
     </div>
   )

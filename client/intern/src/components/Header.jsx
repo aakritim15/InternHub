@@ -8,8 +8,9 @@ const Header = () => {
 
   return (
     <header className="header">
-      <div className="logo">
-        <img src="../images/logo.png" alt="InternHub" />
+      <div className="logo" style={{display: 'flex', flexDirection: 'row', gap: '2vh', fontWeight: 'bold', fontSize: '4vh', justifyItems: 'center', alignItems: 'center'}}>
+        <img src="/logo.svg" alt="InternHub" style={{width: '7vh', height: '7vh'}} />
+        <div style={{color: '#6300b3'}}>InternHub</div>
       </div>
       <nav>
         <ul>

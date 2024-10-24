@@ -2,6 +2,7 @@ import JobPage from "../pages/JobPage";
 import Login from "../pages/Login";
 import PostJobForm from '../pages/PostJobForm';
 import Profile from '../pages/ProfileForm';
+import React from 'react';
 import Signup from '../pages/Signup';
     const routes = [
         {

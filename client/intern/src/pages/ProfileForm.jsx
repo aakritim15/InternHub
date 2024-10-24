@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 // Styled Components
 const Root = styled(Paper)(({ theme }) => ({
@@ -24,6 +25,10 @@ const SocialLinksHeading = styled(Typography)(({ theme }) => ({
 }));
 
 const ProfileForm = () => {
+  const navigate = useNavigate();
+  const redToDash = () => {
+    navigate('/')
+  }
   const [formData, setFormData] = useState({
     website: '',
     location: '',
@@ -127,6 +132,7 @@ const ProfileForm = () => {
     <Root>
       <Typography variant="h5" gutterBottom>
         Create Your Profile
+         
       </Typography>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <Grid2 container columns={12} spacing={2}>
@@ -205,7 +211,7 @@ const ProfileForm = () => {
             </Box>
           </Grid2>
           <Grid2 xs={12}>
-            <StyledButton type="submit" variant="contained" color="primary" fullWidth>
+            <StyledButton type="submit" variant="contained" color="primary" onClick={redToDash} fullWidth>
               Submit Profile
             </StyledButton>
           </Grid2>
