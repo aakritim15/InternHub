@@ -98,7 +98,7 @@ export default function SignIn(props) {
       console.log(userId)
       login({ id: userId, token });  // Update user in context
       console.log(userId)
-      navigate('/createProfile');
+      navigate('/createjob');
     } catch (error) {
       console.error(error.response.data);
     } finally {
