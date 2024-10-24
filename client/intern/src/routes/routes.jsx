@@ -33,6 +33,13 @@ import Signup from '../pages/Signup';
             protected: true
         },
         {
+            name: "InternStatusPage",
+            layout: '/',
+            path: '/internstatuspage',
+            component: <InternStatusPage/>,
+            // protected: true
+        },
+        {
             name: "CreateProfile",
             layout: '/',
             path: '/createprofile',
