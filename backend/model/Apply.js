@@ -9,7 +9,7 @@ const ApplySchema = new mongoose.Schema({
     },
     job:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'recruiter-profile'
+        ref: 'job-profile'
     },
     company:{
         type: mongoose.Schema.Types.String,

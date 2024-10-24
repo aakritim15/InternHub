@@ -46,6 +46,7 @@
                     type: String,
                     default: 'Pending',
                     enum: [
+                        'Pending',
                         'Accepted',
                         'Rejected',
                     ]

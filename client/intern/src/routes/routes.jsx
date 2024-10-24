@@ -1,4 +1,5 @@
 import React from 'react';
+import AppliedJobs from '../pages/AppliedJobs';
 import JobPage from "../pages/JobPage";
 import Login from "../pages/Login";
 import PostJobForm from '../pages/PostJobForm';
@@ -38,6 +39,13 @@ import Signup from '../pages/Signup';
             component: <Profile/>,
             protected: true
         },
+        {
+            name: "AppliedJobs",
+            layout: '/',
+            path: '/appliedjobs',
+            component: <AppliedJobs/>,
+            protected:true
+        }
         
     ]
 

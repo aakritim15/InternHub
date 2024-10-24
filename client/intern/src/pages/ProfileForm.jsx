@@ -2,8 +2,8 @@ import { Box, Button, Grid as Grid2, Paper, TextField, Typography } from '@mui/m
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 // Styled Components
 const Root = styled(Paper)(({ theme }) => ({
@@ -26,9 +26,7 @@ const SocialLinksHeading = styled(Typography)(({ theme }) => ({
 
 const ProfileForm = () => {
   const navigate = useNavigate();
-  const redToDash = () => {
-    navigate('/')
-  }
+  
   const [formData, setFormData] = useState({
     website: '',
     location: '',
@@ -100,7 +98,7 @@ const ProfileForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the form from submitting in the default way
     const profileData = new FormData(); // Using FormData to handle both text fields and file uploads
     profileData.append('website', website);
     profileData.append('location', location);
@@ -123,6 +121,8 @@ const ProfileForm = () => {
       console.log('Profile created', res.data);
       setResumeUrl(res.data.resumeUrl); // Assuming the backend returns the resume URL
       setResumeFileName(res.data.resumeFileName); // Assuming the backend returns the resume filename
+
+      navigate('/'); // Redirect after successful submission
     } catch (error) {
       console.error('Error creating profile', error.message);
     }
@@ -132,7 +132,6 @@ const ProfileForm = () => {
     <Root>
       <Typography variant="h5" gutterBottom>
         Create Your Profile
-         
       </Typography>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <Grid2 container columns={12} spacing={2}>
@@ -211,7 +210,7 @@ const ProfileForm = () => {
             </Box>
           </Grid2>
           <Grid2 xs={12}>
-            <StyledButton type="submit" variant="contained" color="primary" onClick={redToDash} fullWidth>
+            <StyledButton type="submit" variant="contained" color="primary" fullWidth>
               Submit Profile
             </StyledButton>
           </Grid2>

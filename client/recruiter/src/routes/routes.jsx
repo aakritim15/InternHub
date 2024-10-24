@@ -10,7 +10,8 @@ import Signup from "../pages/Signup";
             name: "Dashboard",
             layout: '/',
             path: '/',
-            component: <JobPage/>
+            component: <JobPage/>,
+            protected:true
         },
         {
             name: "Login",
@@ -28,20 +29,24 @@ import Signup from "../pages/Signup";
             name: "JobSeaechPage",
             layout: '/',
             path: '/jobsearchpage',
-            component: <JobSeacrhPage/>
+            component: <JobSeacrhPage/>,
+            protected:true
         },
         {
             name: "CreateJob",
             layout: '/',
             path: '/createjob',
-            component: <CreateJobListing/>
+            component: <CreateJobListing/>,
+            protected:true
         },
         {
             name: "CreateProfile",
             layout: '/',
             path: '/createprofile',
-            component: <ProfileForm/>
-        }
+            component: <ProfileForm/>,
+            protected:true
+        },
+       
         
     ]
 
