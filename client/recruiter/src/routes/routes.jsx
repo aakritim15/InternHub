@@ -1,6 +1,7 @@
+import React from "react";
 import JobPage from "../pages/JobPage";
-import Login from "../pages/Login";
-import JobSeacrhPage from "../pages/JobSearchPage"
+import JobSeacrhPage from "../pages/JobSearchPage";
+import Login from '../pages/Login';
 import Signup from "../pages/Signup";
     const routes = [
         {
@@ -14,7 +15,8 @@ import Signup from "../pages/Signup";
             layout: '/',
             path: '/login',
             component: <Login/>
-        },{
+        },
+        {
             name: "Register",
             layout: '/',
             path: '/register',

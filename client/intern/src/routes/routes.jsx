@@ -21,7 +21,7 @@ import Signup from '../pages/Signup';
             layout: '/',
             path: '/',
             component: <JobPage/>,
-            protected: true
+            // protected: true
         },
         {
             name: "PostJobForm",

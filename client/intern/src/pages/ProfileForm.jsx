@@ -1,4 +1,4 @@
-import { Box, Button, Grid2, Paper, TextField, Typography } from '@mui/material';
+import { Box, Button, Grid as Grid2, Paper, TextField, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -37,11 +37,11 @@ const ProfileForm = () => {
     resume: null,
   });
   const [resumeFileName, setResumeFileName] = useState('');
+  const [resumeUrl, setResumeUrl] = useState(''); // URL for the resume
 
   const { website, location, description, skills, githubusername, youtube, twitter, linkedin, instagram } = formData;
   const { currentUser } = useAuth();
 
-  // Function to fetch the profile
   const fetchProfile = async (token) => {
     if (!token) return; // No token available
     try {
@@ -58,14 +58,11 @@ const ProfileForm = () => {
     }
   };
 
-  // Fetch profile on component mount
   useEffect(() => {
     const loadProfile = async () => {
       if (currentUser?.token) {
         const profileData = await fetchProfile(currentUser.token);
-        console.log(profileData.resume)
         if (profileData) {
-          console.log("Profile data:", profileData); // Log the fetched data
           setFormData({
             website: profileData.website || '',
             location: profileData.location || '',
@@ -76,13 +73,15 @@ const ProfileForm = () => {
             twitter: profileData.twitter || '',
             linkedin: profileData.linkedin || '',
             instagram: profileData.instagram || '',
-            resume: profileData.resumeFileName || '',
+            resume: profileData.resume || '', // Adjust based on your backend response
           });
+          setResumeUrl(profileData.resumeUrl || ''); // Assuming your API returns the URL of the resume
+          setResumeFileName(profileData.resumeFileName || ''); // Assuming your API returns the filename
         }
       }
     };
 
-    loadProfile(); // Call the loadProfile function
+    loadProfile();
   }, [currentUser]);
 
   const handleChange = (e) => {
@@ -97,13 +96,13 @@ const ProfileForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const profileData = new FormData();
+    const profileData = new FormData(); // Using FormData to handle both text fields and file uploads
     profileData.append('website', website);
     profileData.append('location', location);
     profileData.append('description', description);
     profileData.append('skills', skills);
     profileData.append('githubusername', githubusername);
-    profileData.append('resume', formData.resume);
+    profileData.append('resume', formData.resume); // Add resume file to form data
 
     try {
       const res = await axios.post(
@@ -111,12 +110,14 @@ const ProfileForm = () => {
         profileData,
         {
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data', // Set correct content type for file upload
             'x-auth-token': currentUser.token,
           },
         }
       );
       console.log('Profile created', res.data);
+      setResumeUrl(res.data.resumeUrl); // Assuming the backend returns the resume URL
+      setResumeFileName(res.data.resumeFileName); // Assuming the backend returns the resume filename
     } catch (error) {
       console.error('Error creating profile', error.message);
     }
@@ -177,59 +178,6 @@ const ProfileForm = () => {
             />
           </Grid2>
 
-          {/* Conditionally render social links if they exist */}
-          {(youtube || twitter || linkedin || instagram) && (
-            <>
-              <Grid2 xs={12}>
-                <SocialLinksHeading variant="h6">Social Links</SocialLinksHeading>
-              </Grid2>
-              {youtube && (
-                <Grid2 xs={12} sm={6}>
-                  <StyledTextField
-                    label="YouTube"
-                    name="youtube"
-                    value={youtube}
-                    onChange={handleChange}
-                    fullWidth
-                  />
-                </Grid2>
-              )}
-              {twitter && (
-                <Grid2 xs={12} sm={6}>
-                  <StyledTextField
-                    label="Twitter"
-                    name="twitter"
-                    value={twitter}
-                    onChange={handleChange}
-                    fullWidth
-                  />
-                </Grid2>
-              )}
-              {linkedin && (
-                <Grid2 xs={12} sm={6}>
-                  <StyledTextField
-                    label="LinkedIn"
-                    name="linkedin"
-                    value={linkedin}
-                    onChange={handleChange}
-                    fullWidth
-                  />
-                </Grid2>
-              )}
-              {instagram && (
-                <Grid2 xs={12} sm={6}>
-                  <StyledTextField
-                    label="Instagram"
-                    name="instagram"
-                    value={instagram}
-                    onChange={handleChange}
-                    fullWidth
-                  />
-                </Grid2>
-              )}
-            </>
-          )}
-
           <Grid2 xs={12}>
             <Box>
               <input
@@ -247,6 +195,11 @@ const ProfileForm = () => {
               {resumeFileName && ( // Display the uploaded resume file name
                 <Typography variant="body2" style={{ marginTop: '8px' }}>
                   Uploaded Resume: {resumeFileName}
+                  {resumeUrl && ( // If resume URL is available, provide a download link
+                    <a href={resumeUrl} target="_blank" rel="noopener noreferrer" style={{ marginLeft: '8px' }}>
+                      Download
+                    </a>
+                  )}
                 </Typography>
               )}
             </Box>
