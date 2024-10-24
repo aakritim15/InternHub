@@ -1,13 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext'; // Import the Auth context
 import '../styles/Header.css';
+
 const Header = () => {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout } = useAuth(); // Access the authentication state and logout function from the context
+
   return (
     <header className="header">
-      <div className="logo">
-        <img src="/assets/logo.png" alt="InternHub" />
+      <div className="logo" style={{display: 'flex', flexDirection: 'row', gap: '2vh', fontWeight: 'bold', fontSize: '4vh', justifyItems: 'center', alignItems: 'center'}}>
+        <img src="/logo.svg" alt="InternHub" style={{width: '7vh', height: '7vh'}} />
+        <div style={{color: '#6300b3'}}>InternHub</div>
       </div>
       <nav>
         <ul>

@@ -1,8 +1,12 @@
 /* index.css */
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 /* Import the App.css for global styles */
 @import './App.css';
-
+body{
+  font-family: Roboto, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, sans-serif;
+}
 /* Ensure images are responsive */
 img {
   max-width: 100%;

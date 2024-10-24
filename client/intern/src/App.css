@@ -1,5 +1,7 @@
 /* App.css */
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 /* Reset and Base Styles */
 * {
   margin: 0;
@@ -8,7 +10,7 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: Roboto, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, sans-serif;
   line-height: 1.6;
   color: #333;
   background-color: #f4f4f4;

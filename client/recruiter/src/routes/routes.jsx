@@ -23,7 +23,7 @@ import Signup from "../pages/Signup";
             component: <Signup/>
         },
         {
-            name: "JobSeacrhPage",
+            name: "JobSeaechPage",
             layout: '/',
             path: '/jobsearchpage',
             component: <JobSeacrhPage/>

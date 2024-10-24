@@ -65,12 +65,12 @@ const FeaturedJobs = () => {
       <div className="job-cards">
         {jobs.length > 0 ? (
           jobs.map((job) => (
-            <div key={job._id} className="job-card">
-              <h3>{job.title}</h3>
-              <p>{job.company}</p>
+            <div key={job._id} className="job-card" style={{backgroundColor: "white", padding: "1rem", borderRadius: "5px", boxShadow: ""}}>
+              <h3 style={{fontWeight: "bold", fontSize: "2vh"}}>{job.title}</h3>
+              <p style={{fontWeight: "bold", fontSize: "4vh"}}>{job.company}</p>
               <p>{job.location}</p>
               <p>{job.description}</p>
-              <form onSubmit={(event) => handleSubmit(event, job._id)}>
+              <form onSubmit={(event) => handleSubmit(event, job._id)} style={{display: "flex", justifyContent: "center", marginTop: "1rem", gap: "2vh"}}>
                 <input type="file" name="resume"  /> {/* Resume file input */}
                 <button type="submit" className="apply-btn">Apply Now</button>
               </form>
@@ -86,10 +86,10 @@ const FeaturedJobs = () => {
       <div className="companies-hiring">
         <h3>Top Companies Hiring Now</h3>
         <div className="company-logos">
-          <img src="client/intern/src/images/Google.png" alt="Google" />
-          <img src="client/intern/src/images/Microsoft.jpg" alt="Microsoft" />
-          <img src="client/intern/src/images/Flipkart.png" alt="Flipkart" />
-          <img src="client/intern/src/images/ibm.jpg" alt="IBM" />
+          <img src="/Google.png" alt="Google" />
+          <img src="/Microsoft.jpg" alt="Microsoft" />
+          <img src="/Flipkart.png" alt="Flipkart" />
+          <img src="/ibm.jpg" alt="IBM" />
         </div>
       </div>
     </section>
