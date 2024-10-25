@@ -11,6 +11,10 @@ const ProfileSchema =  new mongoose.Schema({
         type:String,
         required: true
     },
+    email:{
+        type:String,
+        required:true
+    },
     resume: {
         filename: { type: String }, 
         fileId: { type: mongoose.Schema.Types.ObjectId },

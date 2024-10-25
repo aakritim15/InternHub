@@ -2,6 +2,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 import { useAuth } from '../context/AuthContext'; // Assuming you have a useAuth hook for authentication
 
 const MyJobs = () => {
@@ -38,6 +40,7 @@ const MyJobs = () => {
 
     return (
         <div>
+        <Header/>
             <h2>My Jobs</h2>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <ul>
@@ -50,6 +53,7 @@ const MyJobs = () => {
                     </li>
                 ))}
             </ul>
+            <Footer/>
         </div>
     );
 };

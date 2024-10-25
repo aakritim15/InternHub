@@ -2,8 +2,9 @@ import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField, Typo
 import axios from 'axios'; // Import axios
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 import { useAuth } from '../context/AuthContext';
-
 export default function CreateJobListing() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -66,6 +67,8 @@ export default function CreateJobListing() {
   };
 
   return (
+    <div>
+    <Header/>
     <Box
       component="form"
       onSubmit={handleSubmit}
@@ -150,5 +153,7 @@ export default function CreateJobListing() {
         {isSubmitting ? 'Creating...' : 'Create Job Listing'}
       </Button>
     </Box>
+    <Footer/>
+    </div>
   );
 }

@@ -17,17 +17,23 @@ import ColorModeSelect from '../components/ColorModeSelecct';
 import { useAuth } from '../context/AuthContext';
 
 
-const Card = styled(MuiCard)(({ theme }) => ({
+const SignInContainer = styled(Stack)(({ theme }) => ({
+  minHeight: '100vh', // Full height of the viewport
   display: 'flex',
-  flexDirection: 'column',
-  alignSelf: 'center',
-  width: '100%',
-  padding: theme.spacing(4),
-  gap: theme.spacing(2),
-  margin: 'auto',
+  justifyContent: 'center', // Center vertically
+  alignItems: 'center', // Center horizontally
+  padding: theme.spacing(2),
   [theme.breakpoints.up('sm')]: {
-    maxWidth: '450px',
+    padding: theme.spacing(4),
   },
+  position: 'relative', // Ensure the container is positioned correctly
+}));
+
+const Card = styled(MuiCard)(({ theme }) => ({
+  width: '100%', // Full width on smaller screens
+  maxWidth: '400px', // Max width for larger screens
+  padding: theme.spacing(4),
+  margin: 'auto', // Center horizontally
   boxShadow:
     'hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px',
   ...theme.applyStyles('dark', {
@@ -36,30 +42,9 @@ const Card = styled(MuiCard)(({ theme }) => ({
   }),
 }));
 
-const SignInContainer = styled(Stack)(({ theme }) => ({
-  minHeight: '100vh',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: theme.spacing(2),
-  [theme.breakpoints.up('sm')]: {
-    padding: theme.spacing(4),
-  },
-  '&::before': {
-    content: '""',
-    display: 'block',
-    position: 'absolute',
-    zIndex: -1,
-    inset: 0,
-    backgroundImage:
-      'radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))',
-    backgroundRepeat: 'no-repeat',
-    ...theme.applyStyles('dark', {
-      backgroundImage:
-        'radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))',
-    }),
-  },
-}));
+
+
+
 
 export default function SignIn(props) {
   const { isAuthenticated, login } = useAuth(); // Correct, using what's provided in AuthContext
@@ -98,7 +83,7 @@ export default function SignIn(props) {
       console.log(userId)
       login({ id: userId, token });  // Update user in context
       console.log(userId)
-      navigate('/myJobs');
+      navigate('/');
     } catch (error) {
       console.error(error.response.data);
     } finally {
@@ -135,7 +120,7 @@ export default function SignIn(props) {
 
   return (
     <div>
-      <SignInContainer direction="column" justifyContent="space-between">
+      <SignInContainer direction="column" justifyContent="center" alignItems="center">
         <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
         <Card variant="outlined">
           <Typography
