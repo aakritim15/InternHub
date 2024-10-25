@@ -14,10 +14,10 @@ const Header = () => {
       </div>
       <nav>
         <ul>
-          <li><Link to='/'>Home</Link></li>
+          <li><Link to='/'>HOME</Link></li>
           
           <li><Link to="/appliedjobs">APPLIED JOBS</Link></li>
-          <li><Link to="/createProfile">Create profile</Link></li>
+          <li><Link to="/createProfile">CREATE PROFILE</Link></li>
         </ul>
       </nav>
       <div className="auth-buttons">

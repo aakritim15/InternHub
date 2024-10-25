@@ -4,7 +4,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-
+import '../styles/ProfileForm.css';
 // Styled Components
 const Root = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
