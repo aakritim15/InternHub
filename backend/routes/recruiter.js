@@ -10,6 +10,8 @@ const { send } = require('process');
 
 
 //make profile recruiter
+
+//make profile recruiter
 router.post ('/', [auth,
     [
         check('company', 'Company is required').not().isEmpty(),
@@ -31,7 +33,7 @@ router.post ('/', [auth,
             
             if(website)  profileFields.website = website;
             if(location) profileFields.location = location;
-            if(description) profileFields.bio = bio;
+            if(description) profileFields.description = description;
            
             
             
@@ -70,6 +72,16 @@ router.post ('/', [auth,
     
 
 })
+// Get one person's profile
+router.get('/getProfile', [auth], async (req, res) => {
+    try {
+      const profiles = await RecruiterProfile.findOne({ user: req.user.id }).populate('user');
+      res.json(profiles);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Server error');
+    }
+  });
 //get all profiles
 router.get('/', async (req,res)=>{
     try {

@@ -48,7 +48,7 @@ export default function Register(props) {
       const response = await axios.post(`http://localhost:1000/api/${userData.role}`, userData);
       console.log('Registration successful:', response.data);
       login(response.data);
-      navigate('/');
+      navigate('/createprofile');
     } catch (error) {
       console.error('Registration error:', error.response.data);
     }

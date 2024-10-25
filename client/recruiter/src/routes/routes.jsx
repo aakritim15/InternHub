@@ -2,21 +2,13 @@
 import React from "react";
 import CreateJobListing from "../pages/CreateJob";
 import JobApplicants from "../pages/JobApplicants"; // Import the JobApplicants component
-import JobPage from "../pages/JobPage";
-import JobSearchPage from "../pages/JobSearchPage";
 import Login from '../pages/Login';
 import MyJobs from "../pages/MyJobs";
 import ProfileForm from "../pages/ProfileForm";
 import Signup from "../pages/Signup";
 
 const routes = [
-    {
-        name: "Dashboard",
-        layout: '/',
-        path: '/',
-        component: <JobPage />,
-        protected: true
-    },
+    
     {
         name: "Login",
         layout: '/',
@@ -29,13 +21,13 @@ const routes = [
         path: '/register',
         component: <Signup />
     },
-    {
-        name: "JobSearchPage",
-        layout: '/',
-        path: '/jobsearchpage',
-        component: <JobSearchPage />,
-        protected: true
-    },
+    // {
+    //     name: "JobSearchPage",
+    //     layout: '/',
+    //     path: '/jobsearchpage',
+    //     component: <JobSearchPage />,
+    //     protected: true
+    // },
     {
         name: "CreateJob",
         layout: '/',
@@ -53,7 +45,7 @@ const routes = [
     {
         name: "MyJobs",
         layout: '/',
-        path: "/myJobs",
+        path: "/",
         component: <MyJobs />,
         protected: true
     },
