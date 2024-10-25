@@ -37,7 +37,7 @@
             {
                 applicant:{
                     type: mongoose.Schema.Types.ObjectId,
-                    ref: 'user'
+                    ref: 'inter-profile'
                 },
                 resume:{
                     fileId: { type: mongoose.Schema.Types.ObjectId }

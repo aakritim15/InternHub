@@ -1,5 +1,6 @@
 import React from 'react';
 import AppliedJobs from '../pages/AppliedJobs';
+import InternStatusPage from '../pages/InternStatusPage';
 import JobPage from "../pages/JobPage";
 import Login from "../pages/Login";
 import PostJobForm from '../pages/PostJobForm';

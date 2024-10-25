@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const ApplySchema = new mongoose.Schema({
     user:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'inter-profile'
+        ref: 'user'
     },
     job:{
         type: mongoose.Schema.Types.ObjectId,

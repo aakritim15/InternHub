@@ -6,7 +6,8 @@ const auth = require('../middleware/auth');
 const Application = require('../model/Apply');
 const JobProfile = require('../model/Jobs');
 const InternProfile = require('../model/profile/Intern');
-const User = require('../model/User');
+const User = require('../model/User'); // Adjust the path as necessary
+
 
 const router = express.Router();
 
@@ -120,6 +121,88 @@ router.get('/myApplications', auth, async (req, res) => {
     }
 });
 
+//get all jobs
 
+router.get('/myJobs', auth, async (req, res) => {
+    try {
+        const userId = req.user.id; // Get the authenticated user's ID from the token
+
+        // Fetch all jobs created by this user
+        const jobs = await JobProfile.find({ user: userId });
+
+        // Check if the user has posted any jobs
+        if (jobs.length === 0) {
+            return res.status(404).json({ msg: 'No jobs found for this user' });
+        }
+
+        // Respond with the jobs found
+        res.json(jobs);
+    } catch (error) {
+        console.error("Error fetching jobs:", error);
+        res.status(500).json({ msg: 'Server error' });
+    }
+});
+
+
+// Get all applicants for a specific job
+// Express route to get applicants for a job
+router.get('/:jobId/applicants', auth, async (req, res) => {
+    try {
+        const { jobId } = req.params;
+
+        // Fetch the job with applicants
+        const job = await JobProfile.findById(jobId)
+            .populate({
+                path: 'applicants.applicant',
+                select: 'name email experience education description', // Include education field
+            });
+
+        // Check if the job exists
+        if (!job) {
+            return res.status(404).json({ msg: 'Job not found' });
+        }
+
+        // Check if the job has applicants
+        if (!job.applicants || job.applicants.length === 0) {
+            return res.status(404).json({ msg: 'No applicants found for this job' });
+        }
+
+        // Create a response with applicants
+        const applicantData = job.applicants.map(applicant => {
+            if (applicant.applicant) {
+                return {
+                    applicantId: applicant.applicant._id,
+                    name: applicant.applicant.name,
+                    email: applicant.applicant.email,
+                    experience: applicant.applicant.experience,
+                    education: applicant.applicant.education || 'N/A', // Include education
+                    description: applicant.applicant.description || '',
+                    resumeFileId: applicant.resume ? applicant.resume.fileId : null,
+                    status: applicant.status || 'N/A'
+                };
+            } else {
+                return {
+                    applicantId: null,
+                    name: 'Unknown',
+                    email: 'Unknown',
+                    experience: 'Unknown',
+                    education: 'Unknown',
+                    description: '',
+                    resumeFileId: null,
+                    status: 'Unknown'
+                };
+            }
+        }).filter(applicant => applicant.applicantId !== null); // Filter out applicants with no valid ID
+
+        res.json({ jobId: job._id, applicants: applicantData });
+    } catch (error) {
+        console.error("Error fetching applicants:", error);
+        res.status(500).json({ msg: 'Server error' });
+    }
+});
 
 module.exports = router;
+
+
+
+    
