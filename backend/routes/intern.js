@@ -62,12 +62,13 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { website, location, description, skills, githubusername } = req.body;
+    const { name, email, website, location, description, skills, githubusername } = req.body;
 
     // Build profile object
     const profileFields = {};
     profileFields.user = req.user.id;
-
+    if (name) profileFields.name = name;
+    if (email) profileFields.email = email
     if (website) profileFields.website = website;
     if (location) profileFields.location = location;
     if (description) profileFields.description = description;

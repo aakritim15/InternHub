@@ -28,6 +28,8 @@ const ProfileForm = () => {
   const navigate = useNavigate();
   
   const [formData, setFormData] = useState({
+    name: '',
+    email: '',
     website: '',
     location: '',
     description: '',
@@ -42,7 +44,7 @@ const ProfileForm = () => {
   const [resumeFileName, setResumeFileName] = useState('');
   const [resumeUrl, setResumeUrl] = useState(''); // URL for the resume
 
-  const { website, location, description, skills, githubusername, youtube, twitter, linkedin, instagram } = formData;
+  const { name, email, website, location, description, skills, githubusername, youtube, twitter, linkedin, instagram } = formData;
   const { currentUser } = useAuth();
 
   const fetchProfile = async (token) => {
@@ -67,6 +69,8 @@ const ProfileForm = () => {
         const profileData = await fetchProfile(currentUser.token);
         if (profileData) {
           setFormData({
+            name: profileData.name || '',
+            email: profileData.email || '',
             website: profileData.website || '',
             location: profileData.location || '',
             description: profileData.description || '',
@@ -135,6 +139,25 @@ const ProfileForm = () => {
       </Typography>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <Grid2 container columns={12} spacing={2}>
+
+        <Grid2 xs={12}>
+            <StyledTextField
+              label="name"
+              name="name"
+              value={name}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Grid2>
+          <Grid2 xs={12}>
+            <StyledTextField
+              label="email"
+              name="email"
+              value={email}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Grid2>
           <Grid2 xs={12}>
             <StyledTextField
               label="Website"
