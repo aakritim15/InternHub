@@ -3,6 +3,8 @@ import { styled } from '@mui/material/styles';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 import { useAuth } from '../context/AuthContext';
 import '../styles/ProfileForm.css';
 // Styled Components
@@ -133,7 +135,10 @@ const ProfileForm = () => {
   };
 
   return (
+    <div>
+    <Header/>
     <Root>
+    
       <Typography variant="h5" gutterBottom>
         Create Your Profile
       </Typography>
@@ -239,7 +244,10 @@ const ProfileForm = () => {
           </Grid2>
         </Grid2>
       </form>
+      
     </Root>
+    <Footer/>
+    </div>
   );
 };
 

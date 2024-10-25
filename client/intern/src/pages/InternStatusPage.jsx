@@ -1,12 +1,12 @@
 // InternStatusPage.js
 import React, { useState } from 'react';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 import StatusCard from '../components/StatusCard';
 import '../styles/InternStatusPage.css';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 const InternStatusPage = () => {
   const [statuses, setStatuses] = useState({
-    google: 'on-hold',
+    google: 'pending',
     facebook: 'rejected',
     amazon: 'accepted',
   });

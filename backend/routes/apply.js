@@ -76,7 +76,7 @@ router.post('/:jobId', auth, upload.single('resume'), async (req, res) => {
             user: req.user.id,
             job: job._id,
             company: job.company,  // Assuming job profile has a company field
-            status: 'Accepted',    // You can set this to 'pending' or 'accepted'
+            status: 'Pending',    // You can set this to 'pending' or 'accepted'
             resume: resumeFileId || undefined, // If resume is not provided, this will be undefined
         });
 

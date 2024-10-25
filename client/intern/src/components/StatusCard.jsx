@@ -12,7 +12,7 @@ const StatusCard = ({ companyName, role, status, location, price }) => {
         return 'status-rejected';
       case 'pending':
       default:
-        return 'status-onHold';
+        return 'status-pending';
     }
   };
 
