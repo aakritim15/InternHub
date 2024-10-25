@@ -1,0 +1,34 @@
+/* ProfileForm.css */
+
+.root {
+    padding: 32px; /* equivalent to theme.spacing(4) */
+    margin: auto;
+    max-width: 600px;
+    background-color: #ffffff; /* Adjust to match your theme */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 8px; /* Adjust based on your design */
+  }
+  
+  .styled-text-field {
+    margin-bottom: 24px; /* equivalent to theme.spacing(3) */
+  }
+  
+  .styled-button {
+    margin: 16px 0; /* equivalent to theme.spacing(2) */
+    background-color: #3f51b5; /* Primary color */
+    color: #ffffff; /* Text color */
+  }
+  
+  .styled-button:hover {
+    background-color: #303f9f; /* Darker shade for hover */
+  }
+  
+  .resume-label {
+    margin-top: 8px;
+    color: #757575; /* Secondary text color */
+  }
+  
+  .upload-button {
+    display: none; /* Hide the default file input */
+  }
+  
