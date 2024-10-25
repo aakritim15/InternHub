@@ -111,7 +111,8 @@ router.get('/myApplications', auth, async (req, res) => {
             company: app.job.company,
             status: app.status,
             salary: app.job.salary,
-            description: app.job.description
+            description: app.job.description,
+            location: app.job.location
         }));
 
         res.json(applicationData);
@@ -145,7 +146,6 @@ router.get('/myJobs', auth, async (req, res) => {
 
 
 // Get all applicants for a specific job
-// Express route to get applicants for a job
 router.get('/:jobId/applicants', auth, async (req, res) => {
     try {
         const { jobId } = req.params;
@@ -154,7 +154,7 @@ router.get('/:jobId/applicants', auth, async (req, res) => {
         const job = await JobProfile.findById(jobId)
             .populate({
                 path: 'applicants.applicant',
-                select: 'name email experience education description', // Include education field
+                select: 'name email experience education description', // Include necessary fields
             });
 
         // Check if the job exists
@@ -162,25 +162,30 @@ router.get('/:jobId/applicants', auth, async (req, res) => {
             return res.status(404).json({ msg: 'Job not found' });
         }
 
+        // Log job details to inspect structure
+        console.log("Fetched Job:", JSON.stringify(job, null, 2));
+
         // Check if the job has applicants
         if (!job.applicants || job.applicants.length === 0) {
             return res.status(404).json({ msg: 'No applicants found for this job' });
         }
 
-        // Create a response with applicants
+        // Log each applicant to check for null values
         const applicantData = job.applicants.map(applicant => {
+            console.log("Applicant Data:", applicant);
             if (applicant.applicant) {
                 return {
                     applicantId: applicant.applicant._id,
-                    name: applicant.applicant.name,
-                    email: applicant.applicant.email,
+                    name: applicant.applicant.name || 'No Name', // Log if name is missing
+                    email: applicant.applicant.email || 'No Email', // Log if email is missing
                     experience: applicant.applicant.experience,
-                    education: applicant.applicant.education || 'N/A', // Include education
+                    education: applicant.applicant.education || 'N/A',
                     description: applicant.applicant.description || '',
                     resumeFileId: applicant.resume ? applicant.resume.fileId : null,
                     status: applicant.status || 'N/A'
                 };
             } else {
+                console.warn("Found an applicant with no associated user:", applicant);
                 return {
                     applicantId: null,
                     name: 'Unknown',
@@ -192,7 +197,7 @@ router.get('/:jobId/applicants', auth, async (req, res) => {
                     status: 'Unknown'
                 };
             }
-        }).filter(applicant => applicant.applicantId !== null); // Filter out applicants with no valid ID
+        });
 
         res.json({ jobId: job._id, applicants: applicantData });
     } catch (error) {
@@ -200,6 +205,7 @@ router.get('/:jobId/applicants', auth, async (req, res) => {
         res.status(500).json({ msg: 'Server error' });
     }
 });
+
 
 module.exports = router;
 

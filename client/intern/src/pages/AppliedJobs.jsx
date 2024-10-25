@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
+import StatusCard from '../components/StatusCard';
 import { useAuth } from '../context/AuthContext'; // Adjust the path as necessary
-
 const AppliedJobs = () => {
     const { currentUser } = useAuth(); // Get currentUser which contains the token
     const [appliedJobs, setAppliedJobs] = useState([]); // Initialize as an empty array
@@ -48,21 +50,26 @@ const AppliedJobs = () => {
 
     return (
         <div>
+        <Header/>
             <h2>Applied Jobs</h2>
             {appliedJobs.length === 0 ? (
                 <p>No applied jobs found.</p>
             ) : (
                 <ul>
                     {appliedJobs.map((job, index) => (
-                        <li key={index}>
-                            <h3>{job.company}</h3>
+                        <li key={index}  style={{listStyle: "none"}}>
+                            {/* <h3>{job.company}</h3>
                             <p>Salary: {job.salary}</p>
                             <p>Description: {job.description}</p>
-                            <p>Status: {job.status || 'Pending'}</p>
+                            <p>Status: {job.status || 'Pending'}</p> */}
+                            <StatusCard companyName={job.company} price={job.salary} role={job.description} status={job.status || 'Accepted'} location={job.location}/>
                         </li>
                     ))}
+
+                    
                 </ul>
             )}
+            <Footer/>
         </div>
     );
 };

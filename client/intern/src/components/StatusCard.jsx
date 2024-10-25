@@ -10,7 +10,7 @@ const StatusCard = ({ companyName, role, status, location, price }) => {
         return 'status-accepted';
       case 'rejected':
         return 'status-rejected';
-      case 'on-hold':
+      case 'pending':
       default:
         return 'status-onHold';
     }

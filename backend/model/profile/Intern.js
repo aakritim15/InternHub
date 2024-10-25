@@ -7,6 +7,10 @@ const ProfileSchema =  new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
     },
+    name:{
+        type:String,
+        required: true
+    },
     resume: {
         filename: { type: String }, 
         fileId: { type: mongoose.Schema.Types.ObjectId },
